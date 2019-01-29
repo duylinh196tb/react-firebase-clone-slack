@@ -55,7 +55,8 @@ class Register extends Component {
       message: "",
       list: []
     },
-    loading: false
+    loading: false,
+    usersRef: firebase.database().ref("users")
   };
 
   handleChange = e => {
@@ -119,20 +120,43 @@ class Register extends Component {
       .createUserWithEmailAndPassword(email, password)
       .then(createdUser => {
         console.log(createdUser);
-        createdUser.user.updateProfile({
-          displayName: username,
-          photoURL: `http://gravatar.com/avatar/${md5(email)}?d=identicon`
-        });
-      })
-      .then(() => {
-        this.setState({ loading: false });
+        createdUser.user
+          .updateProfile({
+            displayName: username,
+            photoURL: `http://gravatar.com/avatar/${md5(
+              createdUser.user.email
+            )}?d=identicon`
+          })
+          .then(() => {
+            this.saveUser(createdUser).then(() => {
+              console.log("user saved");
+              this.setState({
+                loading: false
+              });
+            });
+          })
+          .catch(err => {
+            console.error(err);
+            this.setState({
+              errors: { message: err.message },
+              loading: false
+            });
+          });
       })
       .catch(err => {
+        console.error(err);
         this.setState({
-          errors: { message: err.message, list: [] },
+          errors: { message: err.message },
           loading: false
         });
       });
+  };
+
+  saveUser = createdUser => {
+    return this.state.usersRef.child(createdUser.user.uid).set({
+      name: createdUser.user.displayName,
+      avatar: createdUser.user.photoURL
+    });
   };
 
   render() {
@@ -147,19 +171,22 @@ class Register extends Component {
           </Header>
           <Form size="large" onSubmit={this.handleSubmit}>
             <Segment stacked>
-              {optionFormInput.map(({ name, icon, placeholder, type }) => (
-                <Form.Input
-                  fluid
-                  name={name}
-                  icon={icon}
-                  iconPosition="left"
-                  placeholder={placeholder}
-                  type={type}
-                  onChange={this.handleChange}
-                  value={this.state[name]}
-                  className={errors.list.indexOf(name) !== -1 ? "error" : ""}
-                />
-              ))}
+              {optionFormInput.map(
+                ({ name, icon, placeholder, type }, index) => (
+                  <Form.Input
+                    key={index}
+                    fluid
+                    name={name}
+                    icon={icon}
+                    iconPosition="left"
+                    placeholder={placeholder}
+                    type={type}
+                    onChange={this.handleChange}
+                    value={this.state[name]}
+                    className={errors.list.indexOf(name) !== -1 ? "error" : ""}
+                  />
+                )
+              )}
 
               <Button
                 color="orange"
