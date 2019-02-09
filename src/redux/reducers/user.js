@@ -13,6 +13,9 @@ export default (state = initialState, { type, payload }) => {
         isLoading: false
       };
 
+    case actionTypes.CLEAR_USER:
+      return { ...initialState, isLoading: false };
+
     default:
       return state;
   }

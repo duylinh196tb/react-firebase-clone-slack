@@ -14,7 +14,7 @@ import "semantic-ui-css/semantic.min.css";
 import firebase from "./firebase";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
-import { setUser } from "./redux/actions/user";
+import { setUser, clearUser } from "./redux/actions/user";
 import { connect } from "react-redux";
 import Spinner from "./Components/Spinner";
 
@@ -24,6 +24,9 @@ class Root extends React.Component {
       if (user) {
         this.props.setUser(user);
         this.props.history.push("/");
+      } else {
+        this.props.history.push("/login");
+        this.props.clearUser();
       }
     });
   }
@@ -46,7 +49,7 @@ const RouteWithAuth = withRouter(
     state => ({
       isLoading: state.User.isLoading
     }),
-    { setUser }
+    { setUser, clearUser }
   )(Root)
 );
 
