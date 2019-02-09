@@ -52,7 +52,7 @@ class Channels extends Component {
                   name="channelDetails"
                   onChange={this.handleChange}
                   value={channelDetails}
-                  label="About the Channel"
+                  label="About The Channel"
                 />
               </Form.Field>
             </Form>
