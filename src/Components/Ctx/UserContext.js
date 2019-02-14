@@ -19,7 +19,8 @@ class UserProvider extends Component {
 
 export default connect(
   state => ({
-    User: state.User.currentUser
+    User: state.User.currentUser,
+    Channel: state.Channel.currentChannel
   }),
   {}
 )(UserProvider);

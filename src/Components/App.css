@@ -5,3 +5,13 @@ body,
   padding: 1em;
   background: lightgrey;
 }
+
+.messages {
+  /* height: 385px; */
+  overflow-y: scroll;
+}
+
+.message__form {
+  z-index: 200;
+  height: 12%;
+}

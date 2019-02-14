@@ -14,8 +14,4 @@ const config = {
 };
 
 firebase.initializeApp(config);
-// const messaging = firebase.messaging();
-// messaging.usePublicVapidKey(
-//   "BPBBrOxbwEFlN05dPNjgEQKg-kikvLfChtMmNBRaRQm1jsiNubs_R_xTU821j8YJXy0alg2vsLJb-c2fI5Rgxwo"
-// );
 export default firebase;

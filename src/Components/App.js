@@ -7,24 +7,22 @@ import MetaPanel from "./MetaPanel";
 import UserProvider from "./Ctx/UserContext";
 import "./App.css";
 
-class App extends Component {
-  render() {
-    return (
-      <UserProvider>
-        <Grid columns="equal" className="app" style={{ background: "#eee" }}>
-          <ColorPanel />
-          <SidePanel />
-          <Grid.Column style={{ marginLeft: 320 }}>
-            <Messages />
-          </Grid.Column>
+const App = () => {
+  return (
+    <UserProvider>
+      <Grid columns="equal" className="app" style={{ background: "#eee" }}>
+        <ColorPanel />
+        <SidePanel />
+        <Grid.Column style={{ marginLeft: 320 }}>
+          <Messages />
+        </Grid.Column>
 
-          <Grid.Column width={4}>
+        {/* <Grid.Column width={4}>
             <MetaPanel />
-          </Grid.Column>
-        </Grid>
-      </UserProvider>
-    );
-  }
-}
+          </Grid.Column> */}
+      </Grid>
+    </UserProvider>
+  );
+};
 
 export default App;
