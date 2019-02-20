@@ -8,7 +8,8 @@ class UserProvider extends Component {
     return (
       <UserContext.Provider
         value={{
-          User: this.props.User
+          User: this.props.User,
+          Channel: this.props.Channel
         }}
       >
         {this.props.children}

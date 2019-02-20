@@ -13,5 +13,10 @@ body,
 
 .message__form {
   z-index: 200;
-  height: 12%;
+  height: auto;
+}
+
+.message__self {
+  border-left: 2px solid orange;
+  padding-left: 8px;
 }
