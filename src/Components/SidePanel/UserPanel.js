@@ -20,9 +20,9 @@ class UserPanel extends Component {
     {
       key: "signout",
       text: (
-        <span style={{ width: "100%" }} onClick={this.handleSignout}>
+        <div style={{ width: "100%" }} onClick={this.handleSignout}>
           Sign Out
-        </span>
+        </div>
       )
     }
   ];

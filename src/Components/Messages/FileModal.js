@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import { Modal, Input, Button, Icon } from "semantic-ui-react";
 import mime from "mime-types";
-import uuidv4 from "uuid/v4";
-import firebase from "../../firebase";
-
-const storageRef = firebase.storage().ref();
+// import ProgressBar from "./ProgressBar";
 
 class FileModal extends Component {
   state = {
     visible: false,
     file: null,
-    authorized: ["image/jpeg", "image/png"],
-    percentUploaded: 0
+    authorized: ["image/jpeg", "image/png"]
   };
 
   handleClose = () => {
@@ -33,23 +29,12 @@ class FileModal extends Component {
     const { file } = this.state;
     if (file !== null && this.isAuthorized(file.name)) {
       const metadata = { contentType: mime.lookup(file.name) };
-      this.uploadFile(file, metadata);
+      this.props.uploadFile(file, metadata);
+      this.setState({
+        visible: false,
+        file: null
+      });
     }
-  };
-
-  uploadFile = (file, metadata) => {
-    // const { Channel, messagesRef } = this.props;
-    // const pathToUpload = Channel.id;
-    // const ref = messagesRef;
-    // const filePath = `chat/public/${uuidv4()}.jpg`;
-    // storageRef
-    //   .child(filePath)
-    //   .put(file, metadata)
-    //   .on("state_changed", snap => {
-    //     const percentUploaded = Math.round(
-    //       (snap.bytesTransferred / snap.totalBytes) * 100
-    //     );
-    //   });
   };
 
   isAuthorized = filename =>
@@ -64,10 +49,16 @@ class FileModal extends Component {
       >
         <Modal.Header>Select an Image File</Modal.Header>
         <Modal.Content>
-          <Input fluid label="File types: jpg, png" name="file" type="file" />
+          <Input
+            fluid
+            label="File types: jpg, png"
+            name="file"
+            type="file"
+            onChange={this.addFile}
+          />
         </Modal.Content>
         <Modal.Actions>
-          <Button color="green" inverted>
+          <Button color="green" inverted onClick={this.sendFile}>
             <Icon name="checkmark" /> Send
           </Button>
           <Button color="red" inverted onClick={this.handleClose}>
